@@ -3,54 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Buttons</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
+    <title>Full Screen Toggle</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function toggleFullScreen() {
+            if ((document.fullScreenElement && document.fullScreenElement !== null) || // alternative standard method  
+                (!document.mozFullScreen && !document.webkitIsFullScreen)) { // current working methods  
+                if (document.documentElement.requestFullScreen) {
+                    document.documentElement.requestFullScreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullScreen) {
+                    document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
+            }
+        }
+
+        $(document).ready(function() {
+            $("body").click(function() {
+                toggleFullScreen();
+            });
+        });
+    </script>
 </head>
-<style>
-        body{
-            font-family: 'Roboto', sans-serif;
-        }
-
-        button {        
-
-            width: 12em;
-            font-size: 14px;
-            margin: 15px 0;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            cursor: pointer;
-        }
-        img{
-            overflow-clip-margin: content-box;
-            overflow: clip;
-        }
-        .container {
-            text-align: center;
-            margin-top: 10px; /* Adjust the margin as needed */
-        }
-
-</style>
 <body>
-    <div class="container">
-        <img src="ll.png" width="160" height="160" id="code-img">
-    </div>
-    <div class="container">
-        <p style="font-size: 32px;font-weight: bold;display: block;" class="_label" id="ph_label">+38 099 787 3720 </p>
-    </div>
-    <div class="container">
-        <input class="phoneNumber" type="phone" id="code" required style="border: 1px solid gray;border-radius: 7px;height:50px">
-    </div>
-    <div class="container">
-        <p style="color: gray;font-weight: normal;font-weight: 550;">Код подтверждения отправлен в Телеграм, введите пожалуйста код</p>
-    </div>
-    <div class="container">
-        <button id="button" onclick="javascript:Telegram.WebApp.openTelegramLink('https://t.me/+42777');">Получить код</button>
-    </div>
-    
-
-   
+    <h1>Click anywhere to toggle full screen</h1>
 </body>
 </html>
